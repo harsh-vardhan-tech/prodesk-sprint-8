@@ -19,13 +19,9 @@ export const HomePage: React.FC<HomePageProps> = ({ searchQuery, onOpenMoodMatch
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  // Debounced query with mandatory 500ms delay
   const debouncedSearch = useDebounce(searchQuery, 500);
-
-  // IntersectionObserver reference for Infinite Scroll
   const observer = useRef<IntersectionObserver | null>(null);
 
-  // Load initial or searched movies
   const loadMovies = useCallback(async (query: string, pageNum: number, append: boolean = false) => {
     if (pageNum === 1) {
       setIsLoading(true);
@@ -43,7 +39,6 @@ export const HomePage: React.FC<HomePageProps> = ({ searchQuery, onOpenMoodMatch
 
       if (append) {
         setMovies((prev) => {
-          // Avoid duplicate movie IDs during pagination appends
           const existingIds = new Set(prev.map((m) => m.id));
           const filteredNew = response.results.filter((m) => !existingIds.has(m.id));
           return [...prev, ...filteredNew];
@@ -59,12 +54,10 @@ export const HomePage: React.FC<HomePageProps> = ({ searchQuery, onOpenMoodMatch
     }
   }, []);
 
-  // Effect triggered when debounced search term updates or initial mount
   useEffect(() => {
     loadMovies(debouncedSearch, 1, false);
   }, [debouncedSearch, loadMovies]);
 
-  // Infinite Scroll Intersection Callback
   const lastMovieElementRef = useCallback(
     (node: Element | null | undefined) => {
       if (isLoading || isLoadingMore) return;
@@ -89,7 +82,6 @@ export const HomePage: React.FC<HomePageProps> = ({ searchQuery, onOpenMoodMatch
 
   return (
     <div className="min-h-screen">
-      {/* Featured Spotlight Hero (Visible during standard browsing) */}
       {heroMovie && (
         <section
           aria-label="Featured Movie Spotlight"
@@ -136,7 +128,6 @@ export const HomePage: React.FC<HomePageProps> = ({ searchQuery, onOpenMoodMatch
         </section>
       )}
 
-      {/* Main Movie Catalog Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -161,7 +152,6 @@ export const HomePage: React.FC<HomePageProps> = ({ searchQuery, onOpenMoodMatch
         />
       </main>
 
-      {/* Detail Modal */}
       <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
     </div>
   );

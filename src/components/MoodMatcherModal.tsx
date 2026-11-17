@@ -64,7 +64,6 @@ export const MoodMatcherModal: React.FC<MoodMatcherModalProps> = ({
         className="relative bg-zinc-900 border border-purple-500/30 rounded-xl max-w-lg w-full p-6 shadow-2xl shadow-purple-950/30"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
           <div className="flex items-center space-x-2">
             <div className="p-2 rounded-lg bg-purple-950/60 text-purple-400 border border-purple-800/40">
@@ -88,7 +87,6 @@ export const MoodMatcherModal: React.FC<MoodMatcherModalProps> = ({
           </button>
         </div>
 
-        {/* Form Body */}
         <div className="mt-4 space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase text-zinc-400 tracking-wider mb-1.5">
@@ -103,7 +101,6 @@ export const MoodMatcherModal: React.FC<MoodMatcherModalProps> = ({
             />
           </div>
 
-          {/* Quick preset chips */}
           <div>
             <span className="block text-xs font-medium text-zinc-500 mb-2">
               Or pick an instant mood preset:
@@ -125,7 +122,6 @@ export const MoodMatcherModal: React.FC<MoodMatcherModalProps> = ({
             </div>
           </div>
 
-          {/* AI Result Card */}
           {resultTitle && (
             <div className="p-4 rounded-lg bg-purple-950/30 border border-purple-500/50 flex items-center justify-between gap-3 animate-in fade-in">
               <div>
@@ -147,7 +143,6 @@ export const MoodMatcherModal: React.FC<MoodMatcherModalProps> = ({
             </div>
           )}
 
-          {/* Submit Action */}
           <div className="pt-2 flex justify-end">
             <button
               type="button"

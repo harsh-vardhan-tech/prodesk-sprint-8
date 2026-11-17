@@ -4,14 +4,14 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { matchMovieByMood } from '../services/tmdb';
 
-describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
+describe('Cine-Stream Media Discovery Architecture', () => {
   beforeEach(() => {
     window.history.pushState({}, '', '/');
     localStorage.clear();
     vi.clearAllMocks();
   });
 
-  describe('Phase 1: Base Architecture & Rendering', () => {
+  describe('Core Media Discovery and Cards', () => {
     it('renders the Cine-Stream brand header and navigation elements', () => {
       render(<App />);
       expect(screen.getByRole('link', { name: /cine-stream/i })).toBeInTheDocument();
@@ -27,18 +27,15 @@ describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
       });
 
       expect(screen.getByText('Dune: Part Two')).toBeInTheDocument();
-
-      // Check for star rating
       expect(screen.getAllByText(/7\.7|8\.2/i).length).toBeGreaterThan(0);
 
-      // Check native lazy loading attribute on images
       const images = screen.getAllByRole('img');
       const lazyImages = images.filter((img) => img.getAttribute('loading') === 'lazy');
       expect(lazyImages.length).toBeGreaterThan(0);
     });
   });
 
-  describe('Phase 2: Debounced Search & Favorites Persistence', () => {
+  describe('Search and Favorites Persistence', () => {
     it('handles search input and updates query display', async () => {
       render(<App />);
       const searchInput = screen.getByPlaceholderText(/search movies\.\.\./i);
@@ -60,19 +57,16 @@ describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
         expect(screen.getByText('Deadpool & Wolverine')).toBeInTheDocument();
       });
 
-      // Find the favorite button for Deadpool & Wolverine
       const heartButton = screen.getByRole('button', {
         name: /add deadpool & wolverine to favorites/i,
       });
 
       await userEvent.click(heartButton);
 
-      // Verify localStorage was updated
       const stored = JSON.parse(localStorage.getItem('cine_stream_favorites') || '[]');
       expect(stored.length).toBe(1);
       expect(stored[0].title).toBe('Deadpool & Wolverine');
 
-      // Navigate to Favorites route
       const favoritesLink = screen.getByRole('link', { name: /favorites/i });
       await userEvent.click(favoritesLink);
 
@@ -84,7 +78,7 @@ describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
     });
   });
 
-  describe('Phase 3: AI Mood Matcher & Modal Details', () => {
+  describe('AI Mood Matcher and Movie Details', () => {
     it('opens AI Mood Matcher modal and suggests matching movie', async () => {
       render(<App />);
       const moodButton = screen.getByRole('button', { name: /ai mood matcher|mood/i });
@@ -102,11 +96,9 @@ describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
         expect(screen.getByText(/"Deadpool & Wolverine"/i)).toBeInTheDocument();
       });
 
-      // Click Discover handoff button
       const discoverButton = screen.getByRole('button', { name: /discover/i });
       await userEvent.click(discoverButton);
 
-      // Verifies search input was populated with the matched movie title
       const searchInput = screen.getByPlaceholderText(/search movies\.\.\./i) as HTMLInputElement;
       expect(searchInput.value).toBe('Deadpool & Wolverine');
     });
@@ -126,7 +118,6 @@ describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
         expect(screen.getByText('Dune: Part Two')).toBeInTheDocument();
       });
 
-      // Click on movie card title to open modal
       await userEvent.click(screen.getByText('Dune: Part Two'));
 
       await waitFor(() => {
@@ -136,7 +127,6 @@ describe('Cine-Stream Media Discovery Architecture (Sprint 8)', () => {
       expect(screen.getByRole('heading', { name: 'Dune: Part Two', level: 2 })).toBeInTheDocument();
       expect(screen.getByText(/overview/i)).toBeInTheDocument();
 
-      // Close modal
       const closeBtn = screen.getByRole('button', { name: /close dialog/i });
       await userEvent.click(closeBtn);
 

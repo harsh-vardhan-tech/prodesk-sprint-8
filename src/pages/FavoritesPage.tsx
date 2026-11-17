@@ -12,7 +12,6 @@ export const FavoritesPage: React.FC = () => {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-[80vh]">
-      {/* Header breadcrumb & title */}
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-800">
         <div>
           <Link
@@ -38,7 +37,6 @@ export const FavoritesPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid or Empty State */}
       {favorites.length === 0 ? (
         <div className="text-center py-24 px-4 bg-zinc-900/40 rounded-xl border border-zinc-800">
           <Film className="w-14 h-14 text-zinc-600 mx-auto mb-4" />
@@ -65,7 +63,6 @@ export const FavoritesPage: React.FC = () => {
         </div>
       )}
 
-      {/* Detail Modal */}
       <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
     </main>
   );

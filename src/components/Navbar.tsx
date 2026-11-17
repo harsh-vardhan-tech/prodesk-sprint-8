@@ -21,7 +21,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-[#141414]/95 backdrop-blur-md border-b border-zinc-800 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        {/* Brand Logo */}
         <Link to="/" className="flex items-center space-x-2 group">
           <div className="w-9 h-9 rounded bg-[#e50914] flex items-center justify-center text-white shadow-lg shadow-red-950/40 group-hover:scale-105 transition-transform">
             <Film className="w-5 h-5" />
@@ -31,9 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </span>
         </Link>
 
-        {/* Center / Right Controls */}
         <div className="flex items-center space-x-2 sm:space-x-4 flex-1 justify-end">
-          {/* Debounced Search input (visible on home route) */}
           {!isFavoritesRoute && (
             <div className="relative flex items-center">
               <div className="relative">
@@ -57,7 +54,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           )}
 
-          {/* AI Mood Matcher Button */}
           <button
             onClick={onOpenMoodMatcher}
             className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-900/70 to-indigo-900/70 border border-purple-500/40 text-purple-200 text-xs sm:text-sm font-medium hover:border-purple-400 hover:text-white transition-all shadow-sm"
@@ -67,7 +63,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="md:hidden">Mood</span>
           </button>
 
-          {/* Favorites Route Link */}
           <Link
             to="/favorites"
             className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition-all ${

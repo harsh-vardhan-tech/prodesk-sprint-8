@@ -39,13 +39,11 @@ export const App: React.FC = () => {
             </Routes>
           </div>
 
-          {/* Footer */}
           <footer className="border-t border-zinc-800/80 bg-zinc-950 py-8 px-4 text-center text-xs text-zinc-500 font-mono">
-            <p>Cine-Stream Media Discovery • Sprint 08 Performance Optimization & Client-Side Polish</p>
-            <p className="mt-1 text-zinc-600">Built with React, TMDB REST API, Infinite Scroll &amp; AI Mood Matcher</p>
+            <p>Cine-Stream Media Discovery</p>
+            <p className="mt-1 text-zinc-600">Built with React, TMDB API, Infinite Scroll &amp; AI Mood Matcher</p>
           </footer>
 
-          {/* AI Mood Matcher Modal */}
           <MoodMatcherModal
             isOpen={isMoodModalOpen}
             onClose={() => setIsMoodModalOpen(false)}

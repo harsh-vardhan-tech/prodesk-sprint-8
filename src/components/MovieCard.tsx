@@ -27,7 +27,6 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
       onClick={() => onSelect(movie)}
       className="group relative bg-zinc-900 rounded-md overflow-hidden border border-zinc-800/80 hover:border-zinc-600 transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-black/80 cursor-pointer flex flex-col"
     >
-      {/* Poster Image Container */}
       <div className="relative aspect-[2/3] w-full bg-zinc-800 overflow-hidden">
         {posterUrl ? (
           <img
@@ -47,7 +46,6 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
           </div>
         )}
 
-        {/* Favorite Heart Button */}
         <button
           type="button"
           aria-label={favorite ? `Remove ${movie.title} from favorites` : `Add ${movie.title} to favorites`}
@@ -64,14 +62,12 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
           />
         </button>
 
-        {/* Rating Badge */}
         <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[11px] font-semibold text-amber-400 flex items-center space-x-1">
           <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
           <span>{movie.vote_average ? movie.vote_average.toFixed(1) : 'NR'}</span>
         </div>
       </div>
 
-      {/* Card Metadata */}
       <div className="p-3 flex-1 flex flex-col justify-between">
         <h3 className="text-sm font-semibold text-white tracking-tight line-clamp-1 group-hover:text-[#e50914] transition-colors">
           {movie.title}

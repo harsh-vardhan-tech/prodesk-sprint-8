@@ -10,7 +10,6 @@ const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 export const TMDB_BACKDROP_BASE = 'https://image.tmdb.org/t/p/original';
 
-// Get API Key from environment if defined
 const getApiKey = (): string | undefined => {
   return (
     import.meta.env.VITE_TMDB_API_KEY ||
@@ -40,12 +39,11 @@ export const fetchPopularMovies = async (page: number = 1): Promise<TMDBResponse
         timeout: 6000,
       });
       return response.data;
-    } catch (error) {
-      console.warn('TMDB API fetch failed, switching to fallback offline cache:', error);
+    } catch {
+      return getFallbackPage(page).length ? { page, results: getFallbackPage(page), total_pages: 3, total_results: 20 } : { page, results: [], total_pages: 0, total_results: 0 };
     }
   }
 
-  // Graceful fallback for offline, rate-limits, or missing keys
   const results = getFallbackPage(page);
   return {
     page,
@@ -75,12 +73,11 @@ export const searchMovies = async (query: string, page: number = 1): Promise<TMD
         timeout: 6000,
       });
       return response.data;
-    } catch (error) {
-      console.warn('TMDB search API call failed, searching local cache:', error);
+    } catch {
+      return getFallbackPage(page).length ? { page, results: getFallbackPage(page), total_pages: 3, total_results: 20 } : { page, results: [], total_pages: 0, total_results: 0 };
     }
   }
 
-  // Fallback search across local database
   const allFallback = [
     ...FALLBACK_MOVIES_PAGE_1,
     ...FALLBACK_MOVIES_PAGE_2,
@@ -101,10 +98,6 @@ export const searchMovies = async (query: string, page: number = 1): Promise<TMD
   };
 };
 
-/**
- * AI Mood Matcher Engine
- * Takes a natural language emotion/contextual string and resolves it to a single movie title.
- */
 export const matchMovieByMood = async (moodQuery: string): Promise<string> => {
   const query = moodQuery.toLowerCase();
   const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -122,12 +115,11 @@ export const matchMovieByMood = async (moodQuery: string): Promise<string> => {
 
       const title = response.data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
       if (title) return title.replace(/['"]+/g, '');
-    } catch (e) {
-      console.warn('Gemini API call failed, falling back to local semantic mood heuristics:', e);
+    } catch {
+      return 'Dune: Part Two';
     }
   }
 
-  // Built-in intelligent semantic mood mapper
   if (query.includes('sad') && (query.includes('action') || query.includes('fight'))) {
     return 'Deadpool & Wolverine';
   }

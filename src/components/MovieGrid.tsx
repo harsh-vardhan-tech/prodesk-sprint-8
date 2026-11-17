@@ -53,7 +53,6 @@ export const MovieGrid: React.FC<MovieGridProps> = ({
         ))}
       </div>
 
-      {/* Infinite Scroll Sentinel */}
       {observerRef && hasMore && (
         <div
           ref={observerRef}

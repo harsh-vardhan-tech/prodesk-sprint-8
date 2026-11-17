@@ -47,7 +47,6 @@ export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
         className="relative bg-zinc-900 border border-zinc-800 rounded-lg max-w-2xl w-full overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Backdrop Banner */}
         <div className="relative aspect-video w-full bg-zinc-950">
           {backdropUrl ? (
             <img
@@ -62,7 +61,6 @@ export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
 
-          {/* Close Button */}
           <button
             onClick={onClose}
             aria-label="Close dialog"
@@ -72,7 +70,6 @@ export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
           </button>
         </div>
 
-        {/* Content Body */}
         <div className="p-6 -mt-12 relative z-10">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -98,7 +95,6 @@ export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
               </div>
             </div>
 
-            {/* Favorite Action Button */}
             <button
               onClick={() => toggleFavorite(movie)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all border ${
