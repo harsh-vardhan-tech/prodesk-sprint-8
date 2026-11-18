@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Cine-Stream - Next-generation media discovery with infinite scroll, debounced search, favorites persistence, and AI mood matching." />
     <title>Cine-Stream | Media Discovery Explorer</title>
+    <script>
+      if (typeof window !== 'undefined' && window.location.protocol === 'file:') {
+        window.location.replace('./dist/index.html' + window.location.hash);
+      }
+    </script>
   </head>
   <body style="background-color: #141414; margin: 0; color: #ffffff; min-height: 100vh;" class="bg-[#141414] text-white antialiased selection:bg-[#e50914] selection:text-white">
     <div id="root"></div>
