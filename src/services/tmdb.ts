@@ -11,11 +11,15 @@ export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 export const TMDB_BACKDROP_BASE = 'https://image.tmdb.org/t/p/original';
 
 const getApiKey = (): string | undefined => {
-  return (
-    import.meta.env.VITE_TMDB_API_KEY ||
-    import.meta.env.VITE_TMDB_KEY ||
-    undefined
-  );
+  try {
+    return (
+      import.meta.env?.VITE_TMDB_API_KEY ||
+      import.meta.env?.VITE_TMDB_KEY ||
+      undefined
+    );
+  } catch {
+    return undefined;
+  }
 };
 
 const getFallbackPage = (page: number): Movie[] => {
@@ -100,7 +104,12 @@ export const searchMovies = async (query: string, page: number = 1): Promise<TMD
 
 export const matchMovieByMood = async (moodQuery: string): Promise<string> => {
   const query = moodQuery.toLowerCase();
-  const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  let geminiApiKey: string | undefined;
+  try {
+    geminiApiKey = import.meta.env?.VITE_GEMINI_API_KEY;
+  } catch {
+    geminiApiKey = undefined;
+  }
 
   if (geminiApiKey) {
     try {

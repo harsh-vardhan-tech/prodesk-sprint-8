@@ -73,7 +73,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && page < totalPages) {
+        if (entries && entries[0] && entries[0].isIntersecting && page < totalPages) {
           const nextPage = page + 1;
           setPage(nextPage);
           loadMovies(debouncedSearch, nextPage, true);
