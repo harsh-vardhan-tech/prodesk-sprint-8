@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { Movie } from '../types/movie';
-import { fetchPopularMovies, searchMovies, matchMovieByMood, TMDB_BACKDROP_BASE } from '../services/tmdb';
+import { fetchPopularMovies, searchMovies, matchMovieByMood } from '../services/tmdb';
 import { MovieGrid } from '../components/MovieGrid';
 import { MovieModal } from '../components/MovieModal';
 import { useDebounce } from '../hooks/useDebounce';
-import { Info, Sparkles, Star, Loader2 } from 'lucide-react';
+import { Sparkles, Loader2 } from 'lucide-react';
 
 interface HomePageProps {
   searchQuery: string;
@@ -100,64 +100,25 @@ export const HomePage: React.FC<HomePageProps> = ({
     }
   };
 
-  const heroMovie = !debouncedSearch && movies.length > 0 ? movies[0] : null;
-
   return (
     <div className="min-h-screen">
-      {heroMovie && (
-        <section
-          aria-label="Featured Movie Spotlight"
-          className="relative aspect-[21/9] min-h-[360px] max-h-[560px] w-full overflow-hidden bg-zinc-950 mb-8"
-        >
-          {heroMovie.backdrop_path && (
-            <img
-              src={`${TMDB_BACKDROP_BASE}${heroMovie.backdrop_path}`}
-              alt={heroMovie.title}
-              className="w-full h-full object-cover object-top opacity-60"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/60 to-transparent" />
-
-          <div className="absolute bottom-8 left-4 sm:left-8 md:left-16 max-w-xl z-10">
-            <div className="flex items-center space-x-2 text-xs text-amber-400 font-mono mb-2">
-              <Star className="w-4 h-4 fill-amber-400" />
-              <span>{heroMovie.vote_average.toFixed(1)} / 10 Trending Now</span>
-            </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-none mb-3">
-              {heroMovie.title}
-            </h1>
-            <p className="text-xs sm:text-sm text-zinc-300 line-clamp-3 mb-5 leading-relaxed">
-              {heroMovie.overview}
-            </p>
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={() => setSelectedMovie(heroMovie)}
-                className="flex items-center space-x-2 px-5 py-2.5 rounded bg-[#e50914] text-white font-semibold text-sm hover:bg-red-700 transition-all shadow-lg shadow-red-950/50"
-              >
-                <Info className="w-4 h-4" />
-                <span>Explore Details</span>
-              </button>
-              <button
-                onClick={onOpenMoodMatcher}
-                className="flex items-center space-x-2 px-4 py-2.5 rounded bg-zinc-800/80 backdrop-blur-md text-zinc-200 font-medium text-sm hover:bg-zinc-700 transition-all border border-zinc-700"
-              >
-                <Sparkles className="w-4 h-4 text-purple-400" />
-                <span>Ask AI</span>
-              </button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-16">
         <div className="mb-8 p-4 sm:p-5 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-3 w-full md:w-auto">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-purple-950/50">
               <Sparkles className="w-5 h-5 text-purple-200" />
             </div>
             <div>
-              <div className="text-sm font-bold text-white tracking-tight">AI Mood Matcher</div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm font-bold text-white tracking-tight">AI Mood Matcher</span>
+                <button
+                  type="button"
+                  onClick={onOpenMoodMatcher}
+                  className="text-[11px] px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/60 hover:text-white transition-colors"
+                >
+                  Presets
+                </button>
+              </div>
               <p className="text-xs text-zinc-400">Describe your mood or vibe to discover matching movies</p>
             </div>
           </div>
