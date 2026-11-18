@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
@@ -16,7 +16,7 @@ export const App: React.FC = () => {
 
   return (
     <FavoritesProvider>
-      <BrowserRouter>
+      <HashRouter>
         <div className="min-h-screen bg-[#141414] text-white flex flex-col">
           <Navbar
             searchQuery={searchQuery}
@@ -37,6 +37,16 @@ export const App: React.FC = () => {
                 }
               />
               <Route path="/favorites" element={<FavoritesPage />} />
+              <Route
+                path="*"
+                element={
+                  <HomePage
+                    searchQuery={searchQuery}
+                    onSearchChange={setSearchQuery}
+                    onOpenMoodMatcher={() => setIsMoodModalOpen(true)}
+                  />
+                }
+              />
             </Routes>
           </div>
 
@@ -51,7 +61,7 @@ export const App: React.FC = () => {
             onApplyMovie={handleApplyMoodMatch}
           />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </FavoritesProvider>
   );
 };

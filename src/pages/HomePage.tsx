@@ -69,6 +69,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   const lastMovieElementRef = useCallback(
     (node: Element | null | undefined) => {
       if (isLoading || isLoadingMore) return;
+      if (typeof IntersectionObserver === 'undefined') return;
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {

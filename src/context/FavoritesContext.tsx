@@ -25,9 +25,7 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
-    } catch (e) {
-      console.error('Failed to sync favorites with localStorage', e);
-    }
+    } catch {}
   }, [favorites]);
 
   const toggleFavorite = (movie: Movie) => {

@@ -6,6 +6,7 @@ import { matchMovieByMood } from '../services/tmdb';
 
 describe('Cine-Stream Media Discovery Architecture', () => {
   beforeEach(() => {
+    window.location.hash = '';
     window.history.pushState({}, '', '/');
     localStorage.clear();
     vi.clearAllMocks();
