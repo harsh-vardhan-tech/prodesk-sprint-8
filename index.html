@@ -7,9 +7,17 @@
     <meta name="description" content="Cine-Stream - Next-generation media discovery with infinite scroll, debounced search, favorites persistence, and AI mood matching." />
     <title>Cine-Stream | Media Discovery Explorer</title>
     <script>
-      if (typeof window !== 'undefined' && window.location.protocol === 'file:') {
-        window.location.replace('./dist/index.html' + window.location.hash);
-      }
+      (function () {
+        if (typeof window !== 'undefined') {
+          var port = window.location.port;
+          var isVite = (port === '5173' || port === '5174') && window.location.protocol.startsWith('http');
+          if (!isVite && !window.location.pathname.includes('/dist/')) {
+            var pathname = window.location.pathname;
+            var basePath = pathname.endsWith('/') ? pathname : pathname.replace(/[^\/]+$/, '');
+            window.location.replace(basePath + 'dist/index.html' + window.location.hash);
+          }
+        }
+      })();
     </script>
   </head>
   <body style="background-color: #141414; margin: 0; color: #ffffff; min-height: 100vh;" class="bg-[#141414] text-white antialiased selection:bg-[#e50914] selection:text-white">
