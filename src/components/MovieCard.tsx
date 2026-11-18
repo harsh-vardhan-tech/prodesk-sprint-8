@@ -19,7 +19,9 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
     : 'N/A';
 
   const posterUrl = movie.poster_path && !imageError
-    ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
+    ? movie.poster_path.startsWith('http')
+      ? movie.poster_path
+      : `${TMDB_IMAGE_BASE}${movie.poster_path}`
     : null;
 
   return (

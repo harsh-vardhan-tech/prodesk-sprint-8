@@ -31,6 +31,7 @@ export const App: React.FC = () => {
                 element={
                   <HomePage
                     searchQuery={searchQuery}
+                    onSearchChange={setSearchQuery}
                     onOpenMoodMatcher={() => setIsMoodModalOpen(true)}
                   />
                 }

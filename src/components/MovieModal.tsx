@@ -30,9 +30,13 @@ export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
 
   const favorite = isFavorite(movie.id);
   const backdropUrl = movie.backdrop_path
-    ? `${TMDB_BACKDROP_BASE}${movie.backdrop_path}`
+    ? movie.backdrop_path.startsWith('http')
+      ? movie.backdrop_path
+      : `${TMDB_BACKDROP_BASE}${movie.backdrop_path}`
     : movie.poster_path
-    ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
+    ? movie.poster_path.startsWith('http')
+      ? movie.poster_path
+      : `${TMDB_IMAGE_BASE}${movie.poster_path}`
     : null;
 
   return (
